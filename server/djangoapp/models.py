@@ -1,12 +1,14 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 class CarMake(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
+
 
 class CarModel(models.Model):
     SEDAN = "Sedan"
@@ -15,6 +17,7 @@ class CarModel(models.Model):
     COUPE = "Coupe"
     HATCHBACK = "Hatchback"
     TYPE_CHOICES = [(v, v) for v in [SEDAN, SUV, WAGON, COUPE, HATCHBACK]]
+
     make = models.ForeignKey(CarMake, on_delete=models.CASCADE, related_name="models")
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES, default=SEDAN)
@@ -25,3 +28,30 @@ class CarModel(models.Model):
 
     def __str__(self):
         return f"{self.make.name} {self.name} ({self.year})"
+
+
+class Dealer(models.Model):
+    full_name = models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    address = models.CharField(max_length=255, blank=True)
+    zip = models.CharField(max_length=20, blank=True)
+
+    def __str__(self):
+        return self.full_name
+
+
+class Review(models.Model):
+    dealership = models.ForeignKey(Dealer, on_delete=models.CASCADE, related_name="reviews")
+    name = models.CharField(max_length=150)
+    review = models.TextField()
+    purchase = models.BooleanField(default=False)
+    purchase_date = models.DateField(null=True, blank=True)
+    car_make = models.CharField(max_length=100, blank=True)
+    car_model = models.CharField(max_length=100, blank=True)
+    car_year = models.IntegerField(null=True, blank=True)
+    sentiment = models.CharField(max_length=20, default="neutral")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.name} for {self.dealership}"
