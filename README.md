@@ -1,4 +1,6 @@
-# DriveWell Dealerships — Full-Stack Capstone
+# fullstack_developer_capstone — DriveWell Dealerships
+
+**IBM Skills Network Fullstack Developer Capstone**
 
 A full-stack dealership discovery and review application built as an IBM Skills Network capstone project.
 
