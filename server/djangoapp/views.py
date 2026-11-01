@@ -198,8 +198,10 @@ def get_car_makes(request):
 
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
-def analyze_review(request):
-    if request.method == "GET":
+def analyze_review(request, review_text=None):
+    if review_text is not None:
+        text = review_text
+    elif request.method == "GET":
         text = request.GET.get("text", "")
     else:
         payload = _json_body(request) or {}
