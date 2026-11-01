@@ -44,9 +44,8 @@ def login_user(request):
 @csrf_exempt
 @require_http_methods(["GET", "POST"])
 def logout_request(request):
-    username = request.user.username if request.user.is_authenticated else ""
     logout(request)
-    return JsonResponse({"status": "Logged out", "userName": username})
+    return JsonResponse({"status": "Logged out", "userName": ""})
 
 
 @csrf_exempt
@@ -85,6 +84,9 @@ def _dealer_dict(dealer):
         "state": dealer.state,
         "address": dealer.address,
         "zip": dealer.zip,
+        "lat": dealer.lat,
+        "long": dealer.long,
+        "short_name": dealer.short_name,
     }
 
 
