@@ -36,6 +36,9 @@ class Dealer(models.Model):
     state = models.CharField(max_length=100)
     address = models.CharField(max_length=255, blank=True)
     zip = models.CharField(max_length=20, blank=True)
+    lat = models.CharField(max_length=30, blank=True, default="")
+    long = models.CharField(max_length=30, blank=True, default="")
+    short_name = models.CharField(max_length=100, blank=True, default="")
 
     def __str__(self):
         return self.full_name
